@@ -1,0 +1,17 @@
+{
+  "name": "daffie-hellman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "RSA.js",
+  "dependencies": {
+    "typescript": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kamil Fijak",
+  "license": "ISC"
+}
