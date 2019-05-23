@@ -1,15 +1,18 @@
+const BigNumber = require('bignumber.js');
+
 class RSA {
-    private primeFirst: number;
-    private primeSecond: number;
-    private euler: number;
-    private phi: number;
-    private relativelyPrimelook: number;
-    private multiplicatedNumbers: number;
-    private multi: number;
-    private privateKey: number;
+    private primeFirst: bigint;
+    private primeSecond: bigint;
+    private euler: bigint;
+    private phi: bigint;
+    private relativelyPrimelook: bigint;
+    private multiplicatedNumbers: bigint;
+    private multi: bigint;
+    private privateKey: bigint;
 //------------------------------------------
-    private encryptedMessage: number | string;
-    private decryptedMessage: number | string;
+    private someRandom: bigint | number | string;
+    private encryptedMessage: bigint;
+    private decryptedMessage: bigint;
 
     constructor() {
         this.primeFirst = this.generatePrimeNumber();
@@ -44,43 +47,44 @@ class RSA {
         return this.multiplicatedNumbers;
     }
     public eulerFunction() {
-        this.phi = (this.primeFirst - 1) * (this.primeSecond - 1);
+        this.phi = (this.primeFirst - 1n) * (this.primeSecond - 1n);
         return this.phi;
     }
     public numbersRelativelyprime() {
-        let relativelyPrime,                                            //relativelyPrime
+        let relativelyPrime: bigint,                                            //relativelyPrime
             isRePrime = false,
-            numberA: number, numberB: number, numberC: number;
+            numberA: bigint, numberB: bigint, numberC: bigint;
+            this.someRandom = BigInt(Math.random());                              //!!!!
 
         while (!isRePrime) {
-            relativelyPrime = Math.floor((Math.random() * (this.phi - 1)) + 1);
+            relativelyPrime = Math.floor((this.someRandom * (this.phi - 1n)) + 1n);
             
-            if (relativelyPrime < 1 || relativelyPrime > this.phi){
+            if (relativelyPrime < 1n || relativelyPrime > this.phi){
                 continue;
             }
             this.relativelyPrimelook = relativelyPrime;
             numberA = this.phi;
             numberB = relativelyPrime;
-            while(numberB != 0) {
+            while(numberB != 0n) {
                 numberC = numberA % numberB;
                 numberA = numberB;
                 numberB = numberC;
             }
-            isRePrime = numberA === 1;
+            isRePrime = numberA === 1n;
         }
         return this.Serching_D(relativelyPrime)/* + ' ' + numberA + /*' ' + numberB + ' ' + numberC*/;
     }
-    private Serching_D(relativePrime: number) {
-        let a0: number,
-        n0: number,
-        p0: number,
-        p1: number,
-        q: number,
-        r: number,
-        t: number;
+    private Serching_D(relativePrime: bigint) {
+        let a0: bigint,
+        n0: bigint,
+        p0: bigint,
+        p1: bigint,
+        q: bigint,
+        r: bigint,
+        t: bigint;
 
-        p0 = 0;
-        p1 = 1;
+        p0 = 0n;
+        p1 = 1n;
         a0 = relativePrime;
         n0 = this.phi;
         // @ts-ignore
@@ -104,26 +108,26 @@ class RSA {
         this.privateKey = p1;
         return this.Summary(p1);
     }
-    private Summary(p1: number) {
+    private Summary(p1: bigint) {
         return "Public Key: " + this.multiplicatedNumbers +"  "+ this.relativelyPrimelook+ '\n' + "Private Key: " + this.multiplicatedNumbers +"  "+ this.privateKey;
     }
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
-    public encryption(message: number) {
-        this.encryptedMessage = Math.pow(message, this.relativelyPrimelook) % this.multiplicatedNumbers;
+    public encryption(message: bigint) {
+        this.encryptedMessage = BigInt(message ** this.relativelyPrimelook % this.multiplicatedNumbers);
         //console.log(message, this.relativelyPrimelook, this.multiplicatedNumbers);
         console.log(this.encryptedMessage);
         return this.decryption(this.encryptedMessage)
     }
-    private decryption(encryptedMessage: number) {
-        this.decryptedMessage = Math.pow(encryptedMessage, this.privateKey) % this.multiplicatedNumbers;
+    private decryption(encryptedMessage: bigint) {
+        this.decryptedMessage = BigInt(encryptedMessage ** this.privateKey % this.multiplicatedNumbers);
         return '\n' + this.decryptedMessage;
     }
 
 
 
     public printNumbers() {
-        console.log(this.numbersRelativelyprime(),this.encryption(8));
+        console.log(this.numbersRelativelyprime(),this.encryption(8n));
     }
 
 }

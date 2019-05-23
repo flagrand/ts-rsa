@@ -1,3 +1,4 @@
+var BigNumber = require('bignumber.js');
 var RSA = /** @class */ (function () {
     function RSA() {
         this.primeFirst = this.generatePrimeNumber();
@@ -33,8 +34,10 @@ var RSA = /** @class */ (function () {
     RSA.prototype.numbersRelativelyprime = function () {
         var relativelyPrime, //relativelyPrime
         isRePrime = false, numberA, numberB, numberC;
+        var jakisrandom = Math.random(); //!!!!
+        BigInt(jakisrandom); //!!!!
         while (!isRePrime) {
-            relativelyPrime = Math.floor((Math.random() * (this.phi - 1)) + 1);
+            relativelyPrime = Math.floor((jakisrandom * (this.phi - 1)) + 1);
             if (relativelyPrime < 1 || relativelyPrime > this.phi) {
                 continue;
             }

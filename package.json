@@ -1,9 +1,12 @@
 {
-  "name": "daffie-hellman",
+  "name": "szyfrowanie",
   "version": "1.0.0",
   "description": "",
   "main": "RSA.js",
   "dependencies": {
+    "bignumber.js": "^8.1.1",
+    "binascii": "0.0.2",
+    "eccrypto": "^1.1.1",
     "typescript": "^2.9.1"
   },
   "devDependencies": {
