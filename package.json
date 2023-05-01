@@ -6,7 +6,7 @@
   "dependencies": {
     "bignumber.js": "^8.1.1",
     "binascii": "0.0.2",
-    "eccrypto": "^1.1.1",
+    "eccrypto": "^1.1.6",
     "typescript": "^2.9.1"
   },
   "devDependencies": {
